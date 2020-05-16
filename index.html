@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中学校非公式ホームページ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="font.js"></script>
+</head>
+<body>
+  <header>
+    <h1><span>日本国立</span>日本中学校</h1>
+    <h2>非公式ホームページ</h2>
+  </header>
+  <main>
+    <section id="schoolDay">
+      <h1>次の登校日</h1>
+      <div class="card">
+        <p id="schoolDayText">2020年01月01日 00:00</p>
+        <h2>登校時間を調べる</h2>
+        <section id="formContainer">
+          <select id="grade">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <span>年</span>
+          <select id="class">
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+            <option value="e">E</option>
+            <option value="f">F</option>
+          </select>
+          <span>組</span>
+          <select id="number">
+            <option value="0">1-17</option>
+            <option value="1">18-</option>
+          </select>
+          <span>番</span>
+        </section>
+        <p id="errorMessage">3年F組は存在しません</p>
+        <h2>提出物を確認する</h2>
+        <a href="" class="btn">この日の提出物を確認</a>
+      </div>
+    </section>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>
