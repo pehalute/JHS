@@ -3,38 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中学校非公式ホームページ</title>
+  <title>桜丘中学校非公式ホームページ</title>
   <link rel="stylesheet" href="style.css">
   <script src="font.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
   <header>
-    <h1><span>日本国立</span>日本中学校</h1>
+    <h1><span>世田谷区立</span>桜丘中学校</h1>
     <h2>非公式ホームページ</h2>
   </header>
   <main>
     <section id="schoolDay">
       <h1>次の登校日</h1>
-      <div class="card">
-        <p id="schoolDayText">2020年01月01日 00:00</p>
+      <div v-if="schoolDay" class="card">
+        <p class="schoolDayText">{{schoolDay + schoolTime}}</p>
         <h2>登校時間を調べる</h2>
         <section id="formContainer">
-          <select id="grade">
+          <select id="grade" v-model="belongs.grades">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
           </select>
           <span>年</span>
-          <select id="class">
+          <select id="class" v-model="belongs.classes">
             <option value="a">A</option>
             <option value="b">B</option>
             <option value="c">C</option>
             <option value="d">D</option>
             <option value="e">E</option>
-            <option value="f">F</option>
+            <option value="f" disabled>F</option>
           </select>
           <span>組</span>
-          <select id="number">
+          <select id="number" v-model="belongs.numbers">
             <option value="0">1-17</option>
             <option value="1">18-</option>
           </select>
@@ -44,8 +45,57 @@
         <h2>提出物を確認する</h2>
         <a href="" class="btn">この日の提出物を確認</a>
       </div>
+      <div v-else class="card">
+        <p class="schoolDayText">登校予定はありません</p>
+      </div>
+    </section>
+    <section id="tasks">
+      <h1>課題</h1>
+      <div id="landscapeMenuContainer">
+        <ul id="switchDisplay" class="landscapeMenu">
+          <li>全て</li>
+          <li class="selected">未完了</li>
+          <li>完了済み</li>
+        </ul>
+        <ul id="narrowDownDisplay" class="landscapeMenu">
+          <li>全て</li>
+          <li>提出なし</li>
+          <li class="selected">5/18 提出</li>
+          <li>5/25 提出</li>
+          <li>学校再開後提出</li>
+        </ul>
+      </div>
+      <ul id="tasksList">
+        <li v-for="(classifiedTasks, i) in tasks">
+          <h2>{{classifiedTasks.subject}}</h3>
+          <ul class="task">
+            <li v-for="(task, i2) in classifiedTasks.tasks">
+              <label>
+                <input type="checkbox" v-model="done" :value="i+'-'+i2">
+                <h3>{{task.title}}</h3>
+                <table>
+                <tr>
+                  <th>枚数：</th>
+                  <td>{{task.number}}</td>
+                </tr>
+                <tr>
+                  <th>配布日：</th>
+                  <td>{{dateText(task.distribusion)}}</td>
+                </tr>
+                <tr>
+                  <th>提出日：</th>
+                  <td>{{dateText(task.filing)}}</td>
+                </tr>
+                </table>
+              </label>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </section>
   </main>
+  <script src="schoolTime.js"></script>
+  <script src="tasks.js"></script>
   <script src="index.js"></script>
 </body>
 </html>

@@ -18,12 +18,12 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 900;
 }
 
 header h1 span {
-  font-size: 25px;
+  font-size: 22px;
 }
 
 header h2 {
@@ -87,14 +87,15 @@ main > section > h1:after {
   margin: 0 2px;
 }
 
-#schoolDayText {
+.schoolDayText {
   margin: 0;
   font-size: 20px;
 }
 
 #errorMessage {
-   color: #c62828;
-   font-size: 13px; 
+  display: none;
+  color: #c62828;
+  font-size: 13px; 
 }
 
 #formContainer {
@@ -105,7 +106,7 @@ main > section > h1:after {
 #formContainer select {
   flex-grow: 1;
   height: 25px;
-  border: 1px solid #263239;
+  border: 1px solid var(--themaColor);
   border-radius: 50px;
   background: transparent;
   text-align: center;
@@ -129,8 +130,161 @@ main > section > h1:after {
   border-radius: 26px;
   background: var(--themaColor);
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 20px;
   color: #fff;
   text-decoration: none;
 }
+
+#landscapeMenuContainer {
+  position: sticky;
+  top: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--themaColor);
+  background: #fff;
+  z-index: 99;
+}
+
+.landscapeMenu {
+  display: flex;
+  padding: 0;
+  list-style: none;
+}
+
+.landscapeMenu li{
+  padding: 5px 0 7px;
+  border: solid var(--themaColor);
+  border-width: 2px 1px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.landscapeMenu li:first-of-type {
+  border-left-width: 2px;
+  border-radius: 24px 0 0 24px;
+}
+
+.landscapeMenu li:last-of-type {
+  border-right-width: 2px;
+  border-radius: 0 24px 24px 0px;
+}
+
+.landscapeMenu li.selected {
+  background: var(--themaColor);
+  color: #fff
+}
+
+#switchDisplay {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#switchDisplay li {
+  flex: 1;
+}
+
+#narrowDownDisplay {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  margin-bottom: 0;
+}
+
+.classifiedTasks::-webkit-scrollbar {
+  display:none;
+}
+
+#narrowDownDisplay li {
+  flex-shrink: 0;
+  position: relative;
+  width: 200px;
+}
+
+#narrowDownDisplay li:first-of-type {
+  margin-left: 5%;
+}
+
+#narrowDownDisplay li:last-of-type:after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  width: 5%;
+  height: 100%;
+}
+
+#tasks ul {
+  list-style: none;
+  padding: 0;
+}
+
+#tasks h2{
+  width: 80%;
+  margin: 10px auto 0;
+  padding: 0 5%;
+  border-bottom: 1px solid var(--themaColor);
+  font-size: 20px;
+  font-weight: 100;
+}
+
+#tasks .task {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#tasks .task input[type="checkbox"] {
+  display: none;
+}
+
+#tasks .task h3 {
+  position: relative;
+  margin-bottom: 0;
+  padding-left: 30px;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  cursor: pointer;
+}  
+
+#tasks .task h3:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--themaColor);
+  transition: all .15s;
+  -webkit-transition: all .15s;
+}
+
+#tasks .task input[type="checkbox"]:checked + h3,
+#tasks .task input[type="checkbox"]:checked + h3 + table {
+  transition: all .15s;
+  -webkit-transition: all .15s;
+  color :#999;
+}
+
+#tasks .task input[type="checkbox"]:checked + h3:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+#tasks .task table {
+  padding-left: 50px;
+  color: #3E4D55;
+  font-size: 12px;
+}
+
+#tasks .task table th {
+  text-align: right;
+  font-weight: 500;
+}
+
