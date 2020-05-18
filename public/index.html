@@ -17,7 +17,7 @@
     <section id="schoolDay">
       <h1>次の登校日</h1>
       <div v-if="schoolDay" class="card">
-        <p class="schoolDayText">{{schoolDay + schoolTime}}</p>
+        <p class="schoolDayText">{{getDisplayFormat(schoolDay, true) + ' ' +  schoolTime}}</p>
         <h2>登校時間を調べる</h2>
         <section id="formContainer">
           <select id="grade" v-model="belongs.grades">
@@ -32,7 +32,7 @@
             <option value="c">C</option>
             <option value="d">D</option>
             <option value="e">E</option>
-            <option value="f" disabled>F</option>
+            <option value="f" :disabled="isFDisabled">F</option>
           </select>
           <span>組</span>
           <select id="number" v-model="belongs.numbers">
@@ -53,24 +53,20 @@
       <h1>課題</h1>
       <div id="landscapeMenuContainer">
         <ul id="switchDisplay" class="landscapeMenu">
-          <li>全て</li>
-          <li class="selected">未完了</li>
-          <li>完了済み</li>
+          <li v-for="(switchDisplaySelection, i) in ['全て', '未完了', '完了済み']" :class="{selected: siwtchDisplaySelected === i}" @click="selectSwitchDisplay(i)">{{switchDisplaySelection}}</li>
         </ul>
         <ul id="narrowDownDisplay" class="landscapeMenu">
-          <li>全て</li>
-          <li>提出なし</li>
-          <li class="selected">5/18 提出</li>
-          <li>5/25 提出</li>
-          <li>学校再開後提出</li>
+          <li v-for="(narrowDownSelection, i) in narrowDownSelections" :class="{selected: narrowDownSelected === i}" @click="selectClicked(i)">{{getDisplayFormat(narrowDownSelection, false, "に提出")}}</li>
         </ul>
       </div>
       <ul id="tasksList">
         <li v-for="(classifiedTasks, i) in tasks">
           <h2>{{classifiedTasks.subject}}</h3>
           <ul class="task">
-            <li v-for="(task, i2) in classifiedTasks.tasks">
-              <label>
+            <!-- <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: switchDisplay(i, i2)}"> -->
+            <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: switchDisplay(i, i2) || narrowDown(i, i2)}">
+              <transition name="fade">
+                <label>
                 <input type="checkbox" v-model="done" :value="i+'-'+i2">
                 <h3>{{task.title}}</h3>
                 <table>
@@ -80,14 +76,15 @@
                 </tr>
                 <tr>
                   <th>配布日：</th>
-                  <td>{{dateText(task.distribusion)}}</td>
+                  <td>{{getDisplayFormat(task.distribusion)}}</td>
                 </tr>
                 <tr>
                   <th>提出日：</th>
-                  <td>{{dateText(task.filing)}}</td>
+                  <td>{{getDisplayFormat(task.filing)}}</td>
                 </tr>
                 </table>
               </label>
+              </transition>
             </li>
           </ul>
         </li>

@@ -189,9 +189,12 @@ main > section > h1:after {
   overflow-y: hidden;
   scrollbar-width: none;
   margin-bottom: 0;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
-.classifiedTasks::-webkit-scrollbar {
+#narrowDownDisplay::-webkit-scrollbar {
   display:none;
 }
 
@@ -199,17 +202,18 @@ main > section > h1:after {
   flex-shrink: 0;
   position: relative;
   width: 200px;
+  scroll-snap-align: center;
 }
 
 #narrowDownDisplay li:first-of-type {
-  margin-left: 5%;
+  margin-left: calc(50vw - 101.5px);
 }
 
 #narrowDownDisplay li:last-of-type:after {
   content: "";
   position: absolute;
-  right: -20px;
-  width: 5%;
+  right: calc((50vw - 101.5px) * -1);
+  width: calc(50vw - 101.5px);
   height: 100%;
 }
 
@@ -255,6 +259,7 @@ main > section > h1:after {
   width: 20px;
   height: 20px;
   border: 1px solid var(--themaColor);
+  border-radius: 11px;
   transition: all .15s;
   -webkit-transition: all .15s;
 }
@@ -264,6 +269,30 @@ main > section > h1:after {
   transition: all .15s;
   -webkit-transition: all .15s;
   color :#999;
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+    height: 0;
+    margin: 0;
+  }
+}
+
+.hide,
+.hide h3{
+  pointer-events: none;
+  animation: hide .6s linear 0s;
+  animation-fill-mode: forwards;
 }
 
 #tasks .task input[type="checkbox"]:checked + h3:before {
@@ -280,7 +309,7 @@ main > section > h1:after {
 #tasks .task table {
   padding-left: 50px;
   color: #3E4D55;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 #tasks .task table th {
