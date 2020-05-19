@@ -110,6 +110,26 @@ const app = new Vue({
 
     //絞り込みメニュー表示初期設定
     submissionFilterMenu.scrollTo(this.submissionFilterTypeId * 202, 0)
+
+   
+    // const hammer = new Hammer(window)
+    // hammer.on("swipeleft", function() {
+    //   // submissionFilterMenu.scrollBy(-100, 0)
+    //   console.log("Hello")
+    // })
+    // hammer.on("swiperight", function() {
+    //   // submissionFilterMenu.scrollBy(100, 0)
+    //   console.log("world")
+    // })
+
+    const hammer = new Hammer(window);
+    hammer.on("swipeleft", function() {
+      submissionFilterMenu.scrollBy(-202, 0)
+    });
+    hammer.on("swiperight", function() {
+      submissionFilterMenu.scrollBy(202, 0)
+    });
+
   },
   methods: {
     setSubmissionType: function(i) {

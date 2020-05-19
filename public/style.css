@@ -289,7 +289,7 @@ main > section > h1:after {
 }
 
 .hide,
-.hide h3{
+.hide *{
   pointer-events: none;
   animation: hide .6s linear 0s;
   animation-fill-mode: forwards;

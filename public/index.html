@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="font.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="hammer.js"></script>
 </head>
 <body>
   <header>
@@ -61,7 +62,7 @@
         </ul>
       </div>
       <ul id="tasksList" >
-        <li v-for="(classifiedTasks, i) in tasks" v-show="shownTasks[i].length !== 0">
+        <li v-for="(classifiedTasks, i) in tasks" :class="{hide: shownTasks[i].length === 0}">
           <h2>{{classifiedTasks.subject}}</h3>
           <ul class="task">
             <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: isHide(i, i2)}">
