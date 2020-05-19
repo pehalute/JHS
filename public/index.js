@@ -7,77 +7,113 @@ const app = new Vue({
       numbers: "0"
     },
     tasks: tasks,
-    schoolDayTable: schoolDayTable,
     done: [],
-    a: 0,
-    narrowDownSelected: 0,
-    siwtchDisplaySelected: 0,
+    submissionFilterTypeId: 0,
+    completionFilterTypeId: 0,
+    submissionFilterTypesList: ["all", "noSubmission", ...schoolDays, "afterRestart"]
   },
   watch: {
-    belongs: {
-      handler: function() {
-        if (this.belongs.grades === "3") {
-          document.getElementById("class").lastChild.disabled = true;
-        } else {
-          document.getElementById("class").lastChild.disabled = false;
-        }
-      },
-      deep: true,
-    },
     done: function() {
+      //タスク完了情報をローカルストレージに保存
       localStorage.setItem("done", JSON.stringify(this.done))
     }
   },
   computed: {
     isFDisabled: function() {
+      //3年ならF組を選択できなくする
       return this.belongs.grades === "3"
     },
     schoolTime: function() {
+      //3年F組ならエラ〜メッセージを表示
       if (this.belongs.grades === "3" && this.belongs.classes === "f") {
         this.belongs.classes = "e"
         document.getElementById("errorMessage").style.display = "block"
       } else {
         document.getElementById("errorMessage").style.display = "none"
       }
+      //次回の投稿時刻を計算
       return `${schoolTimeTable[this.belongs.grades][this.belongs.classes][this.belongs.numbers]}`
     },
     schoolDay: function() {
+      //次の登校日を計算
       const now = new Date()
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-      const schoolDay = schoolDayTable.filter(d => d.getTime() >= today.getTime())[0]
+      const schoolDay = schoolDays.filter(d => d.getTime() >= today.getTime())[0]
 
       if(!schoolDay) {
+        //もう登校日がない場合
         return
       } 
+
       return schoolDay
     },
-    narrowDownSelections: function (){
-      let temp = ["all", "noSubmission"].concat(this.schoolDayTable)
-      temp.push("afterRestart")
-      return temp
+    shownTasks: function(){
+      return this.tasks.map((e, i) => {
+        return e.tasks.filter((e2, i2) => {
+          let submissionFilter;
+          let completionFilter;
+          if (this.submissionFilterTypesList[this.submissionFilterTypeId] === "all") {
+            submissionFilter = true
+          } else if(this.getType(e2.filing) === "Date" && this.getType(this.submissionFilterTypesList[this.submissionFilterTypeId]) === "Date"){
+            submissionFilter = e2.filing.getTime() === this.submissionFilterTypesList[this.submissionFilterTypeId].getTime()
+          } else {
+            submissionFilter = e2.filing === this.submissionFilterTypesList[this.submissionFilterTypeId]
+          }
+          
+          const isDone = this.done.indexOf(`${i}-${i2}`) !== -1
+
+          switch (this.completionFilterTypeId) {
+            case 1:
+              //絞り込み：未完了
+              completionFilter = !isDone
+              break;
+            case 2:
+              //絞り込み：完了
+              completionFilter = isDone
+              break;
+            default:
+              completionFilter = true;
+              break;
+          }
+          return submissionFilter && completionFilter
+        }).map((e3, i3) => {
+          return this.tasks[i].tasks.indexOf(e3)
+        })
+      })
     },
+    noTaskToShow: function() {
+      let noTaskToShow = true;
+      for(let i = 0; i < this.shownTasks.length; i++){
+        if (this.shownTasks[i].length !== 0) {
+          noTaskToShow = false;
+          break
+        }
+      }
+
+      return noTaskToShow
+    }
   },
   mounted: function() {
     //絞り込みメニュー初期値読み込み
     if(this.schoolDay) {
-      this. narrowDownSelected = this.narrowDownSelections.indexOf(this.schoolDay)
+      this. submissionFilterTypeId = this.submissionFilterTypesList.indexOf(this.schoolDay)
     }
 
     //完了済みタスクの読み込み
     this.done = JSON.parse(localStorage.getItem("done")) || []
 
     //絞り込みメニュー表示更新設定
-    const narrowDown = document.getElementById("narrowDownDisplay")
-    narrowDown.onscroll = () => {
-      this.narrowDownSelected = Math.floor((narrowDown.scrollLeft + 101.5) / 202)
+    const submissionFilterMenu = document.getElementById("submissionFilterMenu")
+    submissionFilterMenu.onscroll = () => {
+      this.submissionFilterTypeId = Math.floor((submissionFilterMenu.scrollLeft + 101.5) / 202)
     }
 
     //絞り込みメニュー表示初期設定
-    document.getElementById("narrowDownDisplay").scrollTo(this.narrowDownSelected * 202, 0)
+    submissionFilterMenu.scrollTo(this.submissionFilterTypeId * 202, 0)
   },
   methods: {
-    selectClicked: function(i) {
-      document.getElementById("narrowDownDisplay").scrollTo(i * 202, 0)
+    setSubmissionType: function(i) {
+      document.getElementById("submissionFilterMenu").scrollTo(i * 202, 0)
     },
     getDisplayFormat: function(d, includeYear = false, message = "") {
       if (typeof d === "object") {
@@ -99,51 +135,13 @@ const app = new Vue({
       }
     },
     selectSwitchDisplay: function(i) {
-      this.siwtchDisplaySelected = i
+      this.completionFilterTypeId = i
     },
     getType: function(v) {
       return Object.prototype.toString.call(v).slice(8, -1)
     },
-    switchDisplay: function(i, i2) {
-      switch (this.siwtchDisplaySelected) {
-        case 1:
-          if (this.done.indexOf(`${i}-${i2}`) === -1) {
-            return false
-          } else {
-            return true
-          }
-        break;
-        case 2:
-          if (this.done.indexOf(`${i}-${i2}`) === -1) {
-            return true
-          } else {
-            return false 
-          }
-        break;
-        default:
-          return false
-          break;
-      }
+    isHide: function(i, i2) {
+      return this.shownTasks[i].indexOf(i2) === -1
     },
-    narrowDown: function(i, i2) {
-      if(this.getType(this.narrowDownSelections[this.narrowDownSelected]) === "Date" && this.getType(this.tasks[i].tasks[i2].filing) === "Date") {
-        if (this.narrowDownSelections[this.narrowDownSelected].getTime() === this.tasks[i].tasks[i2].filing.getTime()) {
-          return false
-        }
-        return true
-      }
-      switch (this.narrowDownSelections[this.narrowDownSelected]) {
-        case this.tasks[i].tasks[i2].filing:
-          return false
-          break;
-          
-        case "all":
-          return false;
-          break;
-          
-        default:
-          return true;
-      } 
-    }
   },
 })

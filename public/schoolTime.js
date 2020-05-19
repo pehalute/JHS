@@ -58,7 +58,7 @@ const schoolTimeTable = {
   }
 }
 
-const schoolDayTable = [
+const schoolDays = [
   new Date(2020, 4, 11),
   new Date(2020, 4, 18),
   new Date(2020, 4, 25),

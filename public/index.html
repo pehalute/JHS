@@ -53,20 +53,19 @@
       <h1>課題</h1>
       <div id="landscapeMenuContainer">
         <ul id="switchDisplay" class="landscapeMenu">
-          <li v-for="(switchDisplaySelection, i) in ['全て', '未完了', '完了済み']" :class="{selected: siwtchDisplaySelected === i}" @click="selectSwitchDisplay(i)">{{switchDisplaySelection}}</li>
+          <li v-for="(switchDisplaySelection, i) in ['全て', '未完了', '完了済み']" :class="{selected: completionFilterTypeId === i}" @click="selectSwitchDisplay(i)">{{switchDisplaySelection}}</li>
         </ul>
-        <ul id="narrowDownDisplay" class="landscapeMenu">
-          <li v-for="(narrowDownSelection, i) in narrowDownSelections" :class="{selected: narrowDownSelected === i}" @click="selectClicked(i)">{{getDisplayFormat(narrowDownSelection, false, "に提出")}}</li>
+        <ul id="submissionFilterMenu" class="landscapeMenu">
+          <li v-for="(submissionFilterType, i) in submissionFilterTypesList" :class="{selected: submissionFilterTypeId === i}" 
+          @click="setSubmissionType(i)">{{getDisplayFormat(submissionFilterType, false, "に提出")}}</li>
         </ul>
       </div>
-      <ul id="tasksList">
-        <li v-for="(classifiedTasks, i) in tasks">
+      <ul id="tasksList" >
+        <li v-for="(classifiedTasks, i) in tasks" v-show="shownTasks[i].length !== 0">
           <h2>{{classifiedTasks.subject}}</h3>
           <ul class="task">
-            <!-- <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: switchDisplay(i, i2)}"> -->
-            <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: switchDisplay(i, i2) || narrowDown(i, i2)}">
-              <transition name="fade">
-                <label>
+            <li v-for="(task, i2) in classifiedTasks.tasks" :class="{hide: isHide(i, i2)}">
+              <label>
                 <input type="checkbox" v-model="done" :value="i+'-'+i2">
                 <h3>{{task.title}}</h3>
                 <table>
@@ -84,11 +83,13 @@
                 </tr>
                 </table>
               </label>
-              </transition>
             </li>
           </ul>
         </li>
       </ul>
+      <div class="card" id="noTaskToShow" v-show="noTaskToShow">
+        当てはまる課題はありません
+      </div>
     </section>
   </main>
   <script src="schoolTime.js"></script>

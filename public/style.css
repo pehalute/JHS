@@ -184,7 +184,7 @@ main > section > h1:after {
   flex: 1;
 }
 
-#narrowDownDisplay {
+#submissionFilterMenu {
   overflow-x: scroll;
   overflow-y: hidden;
   scrollbar-width: none;
@@ -194,22 +194,22 @@ main > section > h1:after {
   -webkit-overflow-scrolling: touch;
 }
 
-#narrowDownDisplay::-webkit-scrollbar {
+#submissionFilterMenu::-webkit-scrollbar {
   display:none;
 }
 
-#narrowDownDisplay li {
+#submissionFilterMenu li {
   flex-shrink: 0;
   position: relative;
   width: 200px;
   scroll-snap-align: center;
 }
 
-#narrowDownDisplay li:first-of-type {
+#submissionFilterMenu li:first-of-type {
   margin-left: calc(50vw - 101.5px);
 }
 
-#narrowDownDisplay li:last-of-type:after {
+#submissionFilterMenu li:last-of-type:after {
   content: "";
   position: absolute;
   right: calc((50vw - 101.5px) * -1);
