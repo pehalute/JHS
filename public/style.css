@@ -317,3 +317,11 @@ main > section > h1:after {
   font-weight: 500;
 }
 
+
+#tasks .task table td + td:before {
+  content: ", "
+}
+
+#noTaskToShow {
+  margin-bottom: 2t0px;
+}

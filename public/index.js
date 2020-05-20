@@ -10,7 +10,8 @@ const app = new Vue({
     done: [],
     submissionFilterTypeId: 0,
     completionFilterTypeId: 0,
-    submissionFilterTypesList: ["all", "noSubmission", ...schoolDays, "afterRestart"]
+    submissionFilterTypesList: ["all", "noSubmission", ...schoolDays, "afterRestart", "loilo"],
+    movieIds: ["plkIKhiAA7s", "wJNrg9noyHs"]
   },
   watch: {
     done: function() {
@@ -50,15 +51,27 @@ const app = new Vue({
     shownTasks: function(){
       return this.tasks.map((e, i) => {
         return e.tasks.filter((e2, i2) => {
-          let submissionFilter;
+          let submissionFilter = false;
           let completionFilter;
-          if (this.submissionFilterTypesList[this.submissionFilterTypeId] === "all") {
-            submissionFilter = true
-          } else if(this.getType(e2.filing) === "Date" && this.getType(this.submissionFilterTypesList[this.submissionFilterTypeId]) === "Date"){
-            submissionFilter = e2.filing.getTime() === this.submissionFilterTypesList[this.submissionFilterTypeId].getTime()
-          } else {
-            submissionFilter = e2.filing === this.submissionFilterTypesList[this.submissionFilterTypeId]
-          }
+          (Array.isArray(e2.filing) ? [...e2.filing] : [e2.filing]).forEach(e3 => {
+            if (this.submissionFilterTypesList[this.submissionFilterTypeId] === "all") {
+              submissionFilter = true
+              return
+            } else if (this.submissionFilterTypesList[this.submissionFilterTypeId] === "loilo") {
+              if (e2.loilo) {
+                submissionFilter = true
+                return
+              }
+              submissionFilter = false
+              return
+            } else if(this.getType(e3) === "Date" && this.getType(this.submissionFilterTypesList[this.submissionFilterTypeId]) === "Date"){
+              submissionFilter = (e3.getTime() === this.submissionFilterTypesList[this.submissionFilterTypeId].getTime() || submissionFilter)
+              return
+            } else {
+              submissionFilter = (e3 === this.submissionFilterTypesList[this.submissionFilterTypeId] || submissionFilter)
+              return
+            }
+          })
           
           const isDone = this.done.indexOf(`${i}-${i2}`) !== -1
 
@@ -76,8 +89,8 @@ const app = new Vue({
               break;
           }
           return submissionFilter && completionFilter
-        }).map((e3, i3) => {
-          return this.tasks[i].tasks.indexOf(e3)
+        }).map((e4) => {
+          return this.tasks[i].tasks.indexOf(e4)
         })
       })
     },
@@ -111,23 +124,12 @@ const app = new Vue({
     //絞り込みメニュー表示初期設定
     submissionFilterMenu.scrollTo(this.submissionFilterTypeId * 202, 0)
 
-   
-    // const hammer = new Hammer(window)
-    // hammer.on("swipeleft", function() {
-    //   // submissionFilterMenu.scrollBy(-100, 0)
-    //   console.log("Hello")
-    // })
-    // hammer.on("swiperight", function() {
-    //   // submissionFilterMenu.scrollBy(100, 0)
-    //   console.log("world")
-    // })
-
-    const hammer = new Hammer(window);
+    const hammer = new Hammer(document.getElementById("tasks"));
     hammer.on("swipeleft", function() {
-      submissionFilterMenu.scrollBy(-202, 0)
+      submissionFilterMenu.scrollBy(202, 0)
     });
     hammer.on("swiperight", function() {
-      submissionFilterMenu.scrollBy(202, 0)
+      submissionFilterMenu.scrollBy(-202, 0)
     });
 
   },
@@ -139,7 +141,11 @@ const app = new Vue({
       if (typeof d === "object") {
         const year = includeYear ? d.getFullYear() + "/" : ""
         if (Array.isArray(d)) {
-          return d.map(d => `${year + (d.getMonth() + 1)}/${d.getDate() + message}`).join(', ')
+          return d.map(d => {
+            if(this.getType(d) === "Date") {
+              return `${year + (d.getMonth() + 1)}/${d.getDate() + message}`
+            }
+          }).join(', ')
         }
         return `${year + (d.getMonth() + 1)}/${d.getDate() + message}`
       } else {
@@ -147,6 +153,7 @@ const app = new Vue({
           afterRestart: "学校再開後に提出",
           noSubmission: "提出なし",
           all: "全て",
+          loilo: "ロイロ"
         }
         if (dic[d]) {
           return dic[d]

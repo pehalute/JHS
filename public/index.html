@@ -78,9 +78,10 @@
                   <th>配布日：</th>
                   <td>{{getDisplayFormat(task.distribusion)}}</td>
                 </tr>
-                <tr>
+                <tr v-show="submissionFilterTypesList[submissionFilterTypeId] === 'all' || submissionFilterTypesList[submissionFilterTypeId] === 'loilo'">
                   <th>提出日：</th>
-                  <td>{{getDisplayFormat(task.filing)}}</td>
+                  <td v-if="task.filing">{{getDisplayFormat(task.filing)}}</td>
+                  <td v-show="task.loilo">ﾛｲﾛ( {{getDisplayFormat(task.loilo)}} )</td>
                 </tr>
                 </table>
               </label>
@@ -90,6 +91,12 @@
       </ul>
       <div class="card" id="noTaskToShow" v-show="noTaskToShow">
         当てはまる課題はありません
+      </div>
+    </section>
+    <section id="youtube">
+      <h1>Youtube動画一覧</h1>
+      <div id="movies">
+        <!-- <iframe v-for="id in movieIds" width="200" height="200":src="'https://www.youtube.com/embed/' + id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
       </div>
     </section>
   </main>
