@@ -83,6 +83,10 @@
                   <td v-if="task.filing">{{getDisplayFormat(task.filing)}}</td>
                   <td v-show="task.loilo">ﾛｲﾛ( {{getDisplayFormat(task.loilo)}} )</td>
                 </tr>
+                <tr v-show="task.note">
+                  <th>備考gi：</th>
+                  <td v-if="task.filing">{{task.note}}</td>
+                </tr>
                 </table>
               </label>
             </li>
