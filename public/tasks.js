@@ -29,25 +29,95 @@ const tasks = [
         distribusion: new Date(2020, 4, 11),
         filing: "noSubmission",
       },{
-        title: "漢字テスト 第一, 二, 三回",
+        title: "漢字テスト 第一回",
         number: 3,
-        distribusion: new Date(2020, 4, 18),
-        filing: new Date(2020, 4, 25),
-      },{
-        title: "言葉の共有　1, 2, 3",
-        number: 3,
-        distribusion: new Date(2020, 4, 18),
-        filing: new Date(2020, 4, 25),
-      },{
-        title: "意見文を書こう 1, 2, 3, 4",
-        number: 4,
         distribusion: new Date(2020, 4, 18),
         filing: "noSubmission",
       },{
-        title: "意見分を書こう　原稿用紙",
+        title: "漢字テスト 第二回",
         number: 3,
         distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "漢字テスト 第三回",
+        number: 3,
+        distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "言葉の共有　1",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
         filing: new Date(2020, 4, 25),
+      },{
+        title: "言葉の共有　2",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: new Date(2020, 4, 25),
+      },{
+        title: "言葉の共有　3",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: new Date(2020, 4, 25),
+      },{
+        title: "意見文を書こう 1",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "意見文を書こう 2",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "意見文を書こう 3",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "意見文を書こう 4",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: "noSubmission",
+      },{
+        title: "意見文を書こう　原稿用紙",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: new Date(2020, 4, 25),
+      },{
+        title: "第四回漢字テスト",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "noSubmission",
+      },{
+        title: "第五回漢字テスト",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "noSubmission",
+      },{
+        title: "「ケナリも花、桜も花」ワークシート1",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "「ケナリも花、桜も花」ワークシート2",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "「ケナリも花、桜も花」ワークシート3",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "「文字を見抜く１　表意文字と表音文字」ワークシート1",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "「文字を見抜く１　表意文字と表音文字」ワークシート2",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -69,6 +139,11 @@ const tasks = [
         distribusion: new Date(2020, 4, 18),
         filing: new Date(2020, 4, 25),
         note: "任意"
+      },{
+        title: "家庭学習の内容　５月３",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -101,6 +176,26 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 18),
         filing: new Date(2020, 4, 25),
+      },{
+        title: "明治維新Vol3",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "明治維新Vol4",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "明治維新Vol5",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "印象に残った19年の出来事ランキング",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -131,6 +226,16 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 18),
         filing: new Date(2020, 4, 25),
+      },{
+        title: "自宅学習プリント６",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "調べ学習「電気エネルギーの作り方」",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -175,14 +280,35 @@ const tasks = [
         title: "Writing topic in May",
         number: 1,
         distribusion: new Date(2020, 4, 18),
-        filing: [new Date(2020, 4, 25),],
-        loilo: [new Date(2020, 4, 25),]
+        filing: new Date(2020, 4, 25),
+        loilo: new Date(2020, 4, 25),
       },{
         title: "U0 / 受け身　ワークシート",
         number: 1,
         distribusion: new Date(2020, 4, 18),
         filing: "noSubmission",
         note: "答えが気になったらロイロ or メール"
+      },{
+        title: "Listening 24 Worksheet",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "noSubmission",
+      },{
+        title: "Presentation1　受け身2 Worksheet",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "noSubmission",
+      },{
+        title: "Presentation1 Speech作り 参考用",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "noSubmission",
+      },{
+        title: "Presentation1 Writing",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+        loilo: new Date(2020, 5, 1),
       },
     ]
   },{
@@ -210,6 +336,11 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 18),
         filing: "afterRestart",
+      },{
+        title: "三年生音楽〜音符や記号〜今までの復習！覚えてるかな？",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -225,7 +356,13 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 11),
         filing: new Date(2020, 4, 18),
-      }
+      },{
+        title: "装飾レポート",
+        number: 1,
+        distribusion: new Date(2020, 4, 18),
+        filing: "afterRestart",
+        loilo: new Date(2020, 4, 29),
+      },
     ]
   },{
     subject: "保体",
@@ -241,6 +378,11 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 18),
         filing: new Date(2020, 4, 25),
+      },{
+        title: "水泳学習プリント",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -267,6 +409,11 @@ const tasks = [
         number: 2,
         distribusion: new Date(2020, 4, 18),
         filing: "afterRestart",
+      },{
+        title: "幼児を観察しよう",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
       },
     ]
   },{
@@ -282,7 +429,27 @@ const tasks = [
         number: 1,
         distribusion: new Date(2020, 4, 11),
         filing: new Date(2020, 4, 18)
-      }
+      },{
+        title: "世田谷タイム",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "個人情報の掲載について",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "PTA委員・お手伝い係事前アンケート",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },{
+        title: "クラス連絡網の作成について",
+        number: 1,
+        distribusion: new Date(2020, 4, 25),
+        filing: "afterRestart",
+      },
     ]
   }
 ]
