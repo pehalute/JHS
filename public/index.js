@@ -8,10 +8,10 @@ const app = new Vue({
     },
     tasks: tasks,
     done: [],
-    submissionFilterTypeId: 0,
-    completionFilterTypeId: 0,
     submissionFilterTypesList: ["all", "noSubmission", ...schoolDays, "afterRestart", "loilo"],
-    movieIds: ["plkIKhiAA7s", "wJNrg9noyHs"]
+    movieIds: ["plkIKhiAA7s", "wJNrg9noyHs"],
+    submissionFilterTypeId: schoolDays.length + 2,
+    completionFilterTypeId: 1,
   },
   watch: {
     done: function() {
@@ -109,7 +109,7 @@ const app = new Vue({
   mounted: function() {
     //絞り込みメニュー初期値読み込み
     if(this.schoolDay) {
-      this. submissionFilterTypeId = this.submissionFilterTypesList.indexOf(this.schoolDay)
+      this.submissionFilterTypeId = this.submissionFilterTypesList.indexOf(this.schoolDay)
     }
 
     //完了済みタスクの読み込み
